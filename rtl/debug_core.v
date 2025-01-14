@@ -26,8 +26,8 @@ module debug_core (
     output wire        DEBUG_AR_EN,
     output wire        DEBUG_AR_WR,
     output wire [15:0] DEBUG_AR_AD,
-    output wire [31:0] DEBUG_AR_DI,
-    input  wire [31:0] DEBUG_AR_DO,
+    input  wire [31:0] DEBUG_AR_DI,
+    output wire [31:0] DEBUG_AR_DO,
 
     output wire        DEBUG_MEM_VALID,
     input  wire        DEBUG_MEM_READY,

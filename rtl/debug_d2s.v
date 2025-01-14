@@ -43,8 +43,8 @@ module debug_d2s (
     output wire        REN,
     output wire        RWR,
     output wire [15:0] RAD,
-    output wire [31:0] RDI,
-    input  wire [31:0] RDO,
+    input  wire [31:0] RDI,
+    output wire [31:0] RDO,
 
     output wire        PVALID,
     input  wire        PREADY,
@@ -151,7 +151,7 @@ module debug_d2s (
 
   always @(posedge CLK) begin
     if (w_ready & r_ar) begin
-      r_ar_do <= RDO;
+      r_ar_do <= RDI;
     end
 
     if (&w_ready & r_am & PREADY) begin
@@ -168,7 +168,7 @@ module debug_d2s (
   assign REN    = r_ar;
   assign RWR    = r_ar_wr;
   assign RAD    = r_ar_ad;
-  assign RDI    = r_ar_di;
+  assign RDO    = r_ar_di;
 
   assign AM_DO  = r_am_do;
   assign SYS_DO = r_sys_do;

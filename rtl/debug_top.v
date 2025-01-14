@@ -7,44 +7,34 @@ module debug_top (
     input  wire TDI,
     output wire TDO,
 
-    input wire CLK100M,
+    input wire RST_N,
+    input wire CLK,
 
-    output wire [3:0] LED
+    output wire [1:0] LED
 );
 
-  wire tdo_o, tdo_oe;
+  wire tdo_o, tdo_oe, tdi_o;
 
   assign TDO = (tdo_oe) ? tdo_o : 1'bz;
-
-  wire dmi_en;
-  wire dmi_wr, dmi_rd;
-  wire [6:0] dmi_ad;
-  wire [31:0] dmi_di, dmi_do;
 
   wire        ar_en;
   wire        ar_wr;
   wire [15:0] ar_ad;
   wire [31:0] ar_di, ar_do;
 
-  wire        am_en;
-  wire        am_wr;
-  wire [ 3:0] am_st;
-  wire [31:0] am_ad;
-  wire [31:0] am_di, am_do;
-
-  wire sys_en, sys_wr;
-  wire [31:0] sys_ad, sys_di, sys_do;
-
-  wire core_reset;
-  wire core_haltreq, core_resumereq;
-  reg core_halt, core_resume;
+  wire core_reset, core_haltreq, core_resumereq;
+  reg core_halt, core_resume, core_running;
 
   wire ndmreset;
+
+  wire mem_valid, mem_ready, mem_except;
+  wire [3:0] mem_wstb;
+  wire [31:0] mem_addr, mem_wdata, mem_rdata;
 
   debug_core u_debug_core (
       .TMS   (TMS),
       .TCK   (TCK),
-      .TRSTN (TRST_N),
+      .TRST_N(TRST_N),
       .TDI   (TDI),
       .TDO   (tdo_o),
       .TDO_OE(tdo_oe),
@@ -61,40 +51,42 @@ module debug_top (
       .O_HARTRESET(core_reset),
       .O_NDMRESET (ndmreset),
 
-      .SYS_RST_N(1'b1),
-      .SYS_CLK  (CLK100M),
+      .SYS_RST_N(RST_N),
+      .SYS_CLK  (CLK),
 
-      .DEBUG_AR_EN(),
-      .DEBUG_AR_WR(),
-      .DEBUG_AR_AD(),
-      .DEBUG_AR_DI(),
-      .DEBUG_AR_DO(),
+      .DEBUG_AR_EN(ar_en),
+      .DEBUG_AR_WR(ar_wr),
+      .DEBUG_AR_AD(ar_ad),
+      .DEBUG_AR_DI(ar_di),
+      .DEBUG_AR_DO(ar_do),
 
-      .DEBUG_MEM_VALID (),
-      .DEBUG_MEM_READY (),
-      .DEBUG_MEM_WSTB  (),
-      .DEBUG_MEM_ADDR  (),
-      .DEBUG_MEM_WDATA (),
-      .DEBUG_MEM_RDATA (),
-      .DEBUG_MEM_EXCEPT()
+      .DEBUG_MEM_VALID (mem_valid),
+      .DEBUG_MEM_READY (mem_ready),
+      .DEBUG_MEM_WSTB  (mem_wstb),
+      .DEBUG_MEM_ADDR  (mem_addr),
+      .DEBUG_MEM_WDATA (mem_wdata),
+      .DEBUG_MEM_RDATA (mem_rdata),
+      .DEBUG_MEM_EXCEPT(mem_except)
   );
 
 
   reg [31:0] data;
   always @(*) begin
     case (ar_ad)
-      16'h0301: data <= 32'h4000_1105;
-      default:  data <= 32'd0;
+      16'h0301: data = 32'h4000_1105;
+      default:  data = 32'd0;
     endcase
   end
 
   assign ar_di = data;
 
-  always @(posedge CLK100M or negedge TRST_N) begin
+  always @(posedge CLK or negedge TRST_N) begin
     if (!TRST_N) begin
-      core_halt   <= 1'b0;
+      core_halt <= 1'b0;
       core_resume <= 1'b0;
+      core_running <= 1'b0;
     end else begin
+      core_running <= 1'b1;
       if (core_haltreq) begin
         core_halt   <= 1'b1;
         core_resume <= 1'b0;
@@ -110,8 +102,10 @@ module debug_top (
 
   assign LED[0] = core_resume;
   assign LED[1] = core_halt;
-  assign LED[2] = 1'b0;
-  assign LED[3] = 1'b0;
+
+  assign mem_except = 1'b0;
+  assign mem_ready = mem_valid;
+  assign mem_rdata = mem_addr;
 
 endmodule
 
