@@ -1,7 +1,16 @@
-# RISC-V JTAG Debug Module
+# RISC-V JTAG Module
 
+This module is the JTAG module for the RISC-V.
 
-## Build
+https://github.com/riscv/riscv-debug-spec/blob/release/riscv-debug-release.pdf
+
+## Signals
+
+T.B.D.
+
+## Build for Simulation
+
+This module can a simulation with OpenOCD + JTAG VPI Server.
 
 ```
 $ cd simocd
