@@ -1,0 +1,5 @@
+../rtl/debug_core.v
+../rtl/debug_d2s.v
+../rtl/debug_dm.v
+../rtl/debug_dtm.v
+../rtl/debug_top.v
