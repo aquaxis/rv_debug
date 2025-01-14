@@ -2,7 +2,12 @@
 
 This module is the JTAG module for the RISC-V.
 
+This JTAG module can be used as a general-purpose JTAG module simply by complying with the following RISC-V Debug document.
+
 https://github.com/riscv/riscv-debug-spec/blob/release/riscv-debug-release.pdf
+
+Using this module, you can access it from the host using OpenOCD and USB-Serial devices such as FTDI.
+And by using the JTAG Server VPI, you can access this JTAG module in a simulation environment, so you can perform simulation in the same host environment as the hardware environment.
 
 ## Signals
 
