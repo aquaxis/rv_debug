@@ -11,12 +11,10 @@ And by using the JTAG Server VPI, you can access this JTAG module in a simulatio
 
 ## Modules
 
-```
-debug_code
-+-debug_d2s
-  debug_dtm
-  debug_dm
-```
+* debug_code
+  * debug_d2s
+  * debug_dtm
+  * debug_dm
 
 ## Signals
 
