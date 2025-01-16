@@ -1,13 +1,32 @@
 # RISC-V JTAG Module
 
+このモジュールはRISC-V用のJTAGモジュールです。
+
 This module is the JTAG module for the RISC-V.
+
+![Block Diagram](./doc/images/block_01.drawio.png)
+
+このJTAGモジュールは、以下のRISC-Vデバッグドキュメントに準拠するだけで、汎用JTAGモジュールとして使用できます。
 
 This JTAG module can be used as a general-purpose JTAG module simply by complying with the following RISC-V Debug document.
 
 https://github.com/riscv/riscv-debug-spec/blob/release/riscv-debug-release.pdf
 
+このモジュールを使用すると、OpenOCDやFTDIなどのUSB-Serialデバイスを使用してホストからアクセスできます。
+また、JTAG Server VPIを使用することで、シミュレーション環境でこのJTAGモジュールにアクセスできるため、ハードウェア環境と同じホスト環境でシミュレーションを行うことができます。
+
 Using this module, you can access it from the host using OpenOCD and USB-Serial devices such as FTDI.
 And by using the JTAG Server VPI, you can access this JTAG module in a simulation environment, so you can perform simulation in the same host environment as the hardware environment.
+
+デバッグ側のインターフェースは2つあります。
+
+There are two debug interfaces:
+
+* 単純なSRAMインターフェースライクなレジスタインターフェース
+* APBライクなメモリインターフェース
+
+* Simple SRAM-like Register Interface
+* APB-like Memory Interface
 
 ## Modules
 
@@ -22,9 +41,9 @@ And by using the JTAG Server VPI, you can access this JTAG module in a simulatio
 
 | Name | In/Out | Size | Description |
 |-----|:---:|----:|:----|
-| TMS              | in  |  1 | JTAG Mode Select |
-| TCK              | in  |  1 | JTAG Clock |
 | TRST_N           | in  |  1 | JTAG Reset: Active Low |
+| TCK              | in  |  1 | JTAG Clock |
+| TMS              | in  |  1 | JTAG Mode Select |
 | TDI              | in  |  1 | JTAG Data In |
 | TDO              | out |  1 | JTAG Data Out |
 | TDO_OE           | out |  1 | JTAG Data Out Enable |
