@@ -92,6 +92,8 @@ There are two debug interfaces:
 
 ## Build for Simulation
 
+このモジュールはOpenOCD＋JTAG VPI Serverでシミュレーションができます。
+
 This module can a simulation with OpenOCD + JTAG VPI Server.
 
 ```
@@ -101,6 +103,8 @@ $ make
 ```
 
 ## Execute for Simulation
+
+シミュレーションには3つのCLIを使います。
 
 The simulation use three CLIs.
 
