@@ -82,8 +82,8 @@ module debug_top (
 
   always @(posedge CLK or negedge TRST_N) begin
     if (!TRST_N) begin
-      core_halt <= 1'b0;
-      core_resume <= 1'b0;
+      core_halt    <= 1'b0;
+      core_resume  <= 1'b0;
       core_running <= 1'b0;
     end else begin
       core_running <= 1'b1;
@@ -100,12 +100,12 @@ module debug_top (
     end
   end
 
-  assign LED[0] = core_resume;
-  assign LED[1] = core_halt;
+  assign LED[0]     = core_resume;
+  assign LED[1]     = core_halt;
 
   assign mem_except = 1'b0;
-  assign mem_ready = mem_valid;
-  assign mem_rdata = mem_addr;
+  assign mem_ready  = mem_valid;
+  assign mem_rdata  = mem_addr;
 
 endmodule
 

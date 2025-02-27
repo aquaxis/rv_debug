@@ -65,17 +65,17 @@ module debug_dm (
   wire        confstrptrvalid;  // R
   wire [ 3:0] version;  // R
 
-  assign version[3:0] = 4'd2;
-  assign authencicated = 1'b1;
-  assign impebreak = 0;
-  assign allhavereset = 0;
-  assign anyhavereset = 0;
-  assign allnonexistent = 0;
-  assign anynonexistent = 0;
-  assign allunavail = 0;
-  assign anyunavail = 0;
-  assign authbusy = 0;
-  assign hasresethalreq = 0;
+  assign version[3:0]    = 4'd2;
+  assign authencicated   = 1'b1;
+  assign impebreak       = 0;
+  assign allhavereset    = 0;
+  assign anyhavereset    = 0;
+  assign allnonexistent  = 0;
+  assign anynonexistent  = 0;
+  assign allunavail      = 0;
+  assign anyunavail      = 0;
+  assign authbusy        = 0;
+  assign hasresethalreq  = 0;
   assign confstrptrvalid = 0;
 
   // Debug Module Control
@@ -116,9 +116,9 @@ module debug_dm (
   reg  [ 2:0] cmderr;  // R/W
   wire [ 3:0] datacount;  // R
 
-  assign datacount = 4'd1;
+  assign datacount   = 4'd1;
   assign progbufsize = 0;
-  assign busy = 0;
+  assign busy        = 0;
 
   // Abstract Command
   wire [ 7:0] cmdtype;  // W
