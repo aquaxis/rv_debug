@@ -1,9 +1,8 @@
 `default_nettype none
 
 module debug_dm (
-    input wire RST_N,
-    input wire CLK,
-
+    input  wire        RST_N,
+    input  wire        CLK,
     // DMI
     input  wire        DMI_CS,
     input  wire        DMI_WR,
@@ -11,30 +10,28 @@ module debug_dm (
     input  wire [ 6:0] DMI_AD,
     input  wire [31:0] DMI_DI,
     output wire [31:0] DMI_DO,
-
     // Debug Module Status
-    input wire I_RESUMEACK,
-    input wire I_RUNNING,
-    input wire I_HALTED,
-
-    output wire O_HALTREQ,
-    output wire O_RESUMEREQ,
-    output wire O_HARTRESET,
-    output wire O_NDMRESET,
-
+    input  wire        I_RESUMEACK,
+    input  wire        I_RUNNING,
+    input  wire        I_HALTED,
+    output wire        O_HALTREQ,
+    output wire        O_RESUMEREQ,
+    output wire        O_HARTRESET,
+    output wire        O_NDMRESET,
+    // Register Bus
     output wire        AR_EN,
     output wire        AR_WR,
     output wire [15:0] AR_AD,
     input  wire [31:0] AR_DI,
     output wire [31:0] AR_DO,
-
+    // Memory Bus
     output wire        AM_EN,
     output wire        AM_WR,
     output wire [ 3:0] AM_ST,
     output wire [31:0] AM_AD,
     input  wire [31:0] AM_DI,
     output wire [31:0] AM_DO,
-
+    // System Bus
     output wire        SYS_EN,
     output wire        SYS_WR,
     output wire [31:0] SYS_AD,
@@ -42,7 +39,8 @@ module debug_dm (
     output wire [31:0] SYS_DO
 );
 
-  reg [31:0] data0, data1;
+  reg  [31:0] data0;
+  reg  [31:0] data1;
   reg  [31:0] data0_r;
 
   // Debug Module Status
@@ -126,29 +124,31 @@ module debug_dm (
   wire [23:0] control;  // W
   reg  [15:0] autoexecprogbuf;  // R/W
   reg  [11:0] autiexecdata;  // R/W
-
   reg  [31:0] nextdm;
-
   reg  [31:0] authdata;
-
-  wire [31:0] haltsum0, haltsum1, haltsum2, haltsum3;
-
-  wire [2:0] sbversion;  // R
-  wire       sbbusyerror;  // R/W
-  wire       sbbusy;  // R
-  reg        sbreadonaddr;  // R/W
-  reg  [2:0] sbaccess;  // R/W
-  reg        sbautoincrement;  // R/W
-  reg        sbreadondata;  // R/W
-  wire [2:0] sberror;  // R/W
-  wire [6:0] sbsize;  // R
-  wire sbaccess128, sbaccess64, sbaccess32, sbaccess16, sbaccess8;  // R
+  wire [31:0] haltsum0;
+  wire [31:0] haltsum1;
+  wire [31:0] haltsum2;
+  wire [31:0] haltsum3;
+  wire [ 2:0] sbversion;  // R
+  wire        sbbusyerror;  // R/W
+  wire        sbbusy;  // R
+  reg         sbreadonaddr;  // R/W
+  reg  [ 2:0] sbaccess;  // R/W
+  reg         sbautoincrement;  // R/W
+  reg         sbreadondata;  // R/W
+  wire [ 2:0] sberror;  // R/W
+  wire [ 6:0] sbsize;  // R
+  wire        sbaccess128;  // R
+  wire        sbaccess64;  // R
+  wire        sbaccess32;  // R
+  wire        sbaccess16;  // R
+  wire        sbaccess8;  // R
 
   assign haltsum0    = 0;
   assign haltsum1    = 0;
   assign haltsum2    = 0;
   assign haltsum3    = 0;
-
   assign sbbusyerror = 0;
   assign sbbusy      = 0;
   assign sberror     = 0;
@@ -183,10 +183,13 @@ module debug_dm (
   localparam A_SBDATA0 = 7'h3C;
   localparam A_HALTSUM0 = 7'h40;
 
-  wire [31:0] dmcontrol, dmstatus;
+  wire [31:0] dmcontrol;
+  wire [31:0] dmstatus;
   wire [31:0] hartinfo;
   wire [31:0] hawindow;
-  wire [31:0] abstractcs, command, abstractauto;
+  wire [31:0] abstractcs;
+  wire [31:0] command;
+  wire [31:0] abstractauto;
   wire [31:0] sbcs;
 
   //assign hasresethalreq = haltreq;
@@ -426,4 +429,5 @@ module debug_dm (
   assign O_NDMRESET = ndmreset;
 
 endmodule
+
 `default_nettype wire

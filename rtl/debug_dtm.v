@@ -22,10 +22,7 @@ module debug_dtm (
   localparam DTMCS_ABITS = 6'b000111;
   localparam DTMCS_VERSION = 4'b0001;
   localparam DTMCS_VALUE = 32'h00000101;
-
   localparam IR_LENGTH = 5;
-
-  // Instructions
   localparam EXTEST = 5'b00000;
   localparam IDCODE = 5'b00001;
   localparam BYPASS = 5'b11111;
@@ -48,7 +45,6 @@ module debug_dtm (
   wire pause_ir;
   wire exit2_ir;
   wire update_ir;
-
   wire extest_select;
   wire idcode_select;
   wire bypass_select;

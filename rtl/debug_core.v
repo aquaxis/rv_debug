@@ -1,34 +1,32 @@
 `default_nettype none
 
 module debug_core (
-    input  wire TMS,
-    input  wire TCK,
-    input  wire TRST_N,
-    input  wire TDI,
-    output wire TDO,
-    output wire TDO_OE,
-
-    output wire TDI_O,
-
+    // JTAG Signal
+    input  wire        TMS,
+    input  wire        TCK,
+    input  wire        TRST_N,
+    input  wire        TDI,
+    output wire        TDO,
+    output wire        TDO_OE,
+    output wire        TDI_O,
     // Debug Module Status
-    input wire I_RESUMEACK,
-    input wire I_RUNNING,
-    input wire I_HALTED,
-
-    output wire O_HALTREQ,
-    output wire O_RESUMEREQ,
-    output wire O_HARTRESET,
-    output wire O_NDMRESET,
-
-    input wire SYS_RST_N,
-    input wire SYS_CLK,
-
+    input  wire        I_RESUMEACK,
+    input  wire        I_RUNNING,
+    input  wire        I_HALTED,
+    output wire        O_HALTREQ,
+    output wire        O_RESUMEREQ,
+    output wire        O_HARTRESET,
+    output wire        O_NDMRESET,
+    // System Bus
+    input  wire        SYS_RST_N,
+    input  wire        SYS_CLK,
+    // System Register Bus
     output wire        DEBUG_AR_EN,
     output wire        DEBUG_AR_WR,
     output wire [15:0] DEBUG_AR_AD,
     input  wire [31:0] DEBUG_AR_DI,
     output wire [31:0] DEBUG_AR_DO,
-
+    // System Memory Bus
     output wire        DEBUG_MEM_VALID,
     input  wire        DEBUG_MEM_READY,
     output wire [ 3:0] DEBUG_MEM_WSTB,

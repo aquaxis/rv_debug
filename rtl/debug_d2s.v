@@ -1,51 +1,51 @@
 `default_nettype none
 
 module debug_d2s (
-    input  wire HALTREQ_I,
-    output wire HALTREQ_O,
-    input  wire HALT_I,
-    output wire HALT_O,
-    input  wire RESUMEREQ_I,
-    output wire RESUMEREQ_O,
-    input  wire RESUME_I,
-    output wire RESUME_O,
-    input  wire RUNNING_I,
-    output wire RUNNING_O,
-    input  wire HARTRESET_I,
-    output wire HARTRESET_O,
-    input  wire NDMRESET_I,
-    output wire NDMRESET_O,
-
+    // Debug Signal
+    input  wire        HALTREQ_I,
+    output wire        HALTREQ_O,
+    input  wire        HALT_I,
+    output wire        HALT_O,
+    input  wire        RESUMEREQ_I,
+    output wire        RESUMEREQ_O,
+    input  wire        RESUME_I,
+    output wire        RESUME_O,
+    input  wire        RUNNING_I,
+    output wire        RUNNING_O,
+    input  wire        HARTRESET_I,
+    output wire        HARTRESET_O,
+    input  wire        NDMRESET_I,
+    output wire        NDMRESET_O,
+    // Register Bus
     input  wire        AR_EN,
     input  wire        AR_WR,
     input  wire [15:0] AR_AD,
     input  wire [31:0] AR_DI,
     output wire [31:0] AR_DO,
-
+    // Memory Bus
     input  wire        AM_EN,
     input  wire        AM_WR,
     input  wire [ 3:0] AM_ST,
     input  wire [31:0] AM_AD,
     input  wire [31:0] AM_DI,
     output wire [31:0] AM_DO,
-
+    // System Bus
     input  wire        SYS_EN,
     input  wire        SYS_WR,
     input  wire [ 3:0] SYS_ST,
     input  wire [31:0] SYS_AD,
     input  wire [31:0] SYS_DI,
     output wire [31:0] SYS_DO,
-
     // CPU Clock Domain
-    input wire RST_N,
-    input wire CLK,
-
+    input  wire        RST_N,
+    input  wire        CLK,
+    // Register Bus
     output wire        REN,
     output wire        RWR,
     output wire [15:0] RAD,
     input  wire [31:0] RDI,
     output wire [31:0] RDO,
-
+    // Mmemory Bus
     output wire        PVALID,
     input  wire        PREADY,
     output wire [ 3:0] PWSTB,
@@ -179,6 +179,5 @@ module debug_d2s (
   assign PWDATA = (r_am) ? r_am_di : (r_sys) ? r_sys_di : 0;
 
 endmodule
-;
 
 `default_nettype wire
